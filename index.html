@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JouJou Store</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+}
+
+header {
+    background: #7c3aed;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.toy {
+    height: 180px;
+    background: #eee;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #7c3aed;
+    color: white;
+    font-size: 16px;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.cart {
+    background: white;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cart h2 {
+    margin-bottom: 15px;
+}
+
+.cart-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.total {
+    margin-top: 18px;
+    font-size: 22px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧸 JouJou Store</h1>
+    <p>La boutique des jouets</p>
+</header>
+
+<div class="container">
+
+    <div class="products">
+
+        <div class="card">
+            <div class="toy">🧸</div>
+            <h2>Grande Peluche</h2>
+            <p>Peluche douce pour enfants</p>
+            <div class="price">12 000 FCFA</div>
+            <button onclick="addToCart('Grande Peluche', 12000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="toy">🚗</div>
+            <h2>Voiture Télécommandée</h2>
+            <p>Voiture rapide et amusante</p>
+            <div class="price">25 000 FCFA</div>
+            <button onclick="addToCart('Voiture Télécommandée', 25000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="toy">🤖</div>
+            <h2>Robot Jouet</h2>
+            <p>Robot interactif pour enfants</p>
+            <div class="price">30 000 FCFA</div>
+            <button onclick="addToCart('Robot Jouet', 30000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="toy">🧩</div>
+            <h2>Jeu de Construction</h2>
+            <p>Jeu créatif de construction</p>
+            <div class="price">18 000 FCFA</div>
+            <button onclick="addToCart('Jeu de Construction', 18000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="toy">🎮</div>
+            <h2>Mini Console</h2>
+            <p>Petite console de jeux</p>
+            <div class="price">35 000 FCFA</div>
+            <button onclick="addToCart('Mini Console', 35000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="toy">⚽</div>
+            <h2>Ballon</h2>
+            <p>Ballon pour jouer en extérieur</p>
+            <div class="price">8 000 FCFA</div>
+            <button onclick="addToCart('Ballon', 8000)">
+                Ajouter au panier
+            </button>
+        </div>
+
+    </div>
+
+    <div class="cart">
+        <h2>🛒 Mon panier</h2>
+
+        <div id="cartItems">
+            Aucun jouet dans le panier.
+        </div>
+
+        <div class="total">
+            Total : <span id="total">0</span> FCFA
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+
+    cart.push({
+        name: name,
+        price: price
+    });
+
+    total += price;
+
+    displayCart();
+}
+
+function displayCart() {
+
+    const cartItems = document.getElementById("cartItems");
+
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "Aucun jouet dans le panier.";
+    }
+
+    cart.forEach(function(item) {
+
+        const div = document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.textContent =
+            "🧸 " + item.name + " — " +
+            item.price.toLocaleString("fr-FR") +
+            " FCFA";
+
+        cartItems.appendChild(div);
+    });
+
+    document.getElementById("total").textContent =
+        total.toLocaleString("fr-FR");
+}
+
+</script>
+
+</body>
+</html>
